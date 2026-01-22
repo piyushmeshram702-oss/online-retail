@@ -327,31 +327,16 @@ class EcommerceMLSolution:
         
         rfm_segmented = self.customer_segments
         
-        # Plot 1: 3D scatter plot of RFM
-        fig = plt.figure(figsize=(15, 5))
-        
-        ax1 = fig.add_subplot(131, projection='3d')
-        scatter = ax1.scatter(
-            rfm_segmented['Recency'], 
-            rfm_segmented['Frequency'], 
-            rfm_segmented['Monetary'],
-            c=rfm_segmented['Cluster'], 
-            cmap='viridis'
-        )
-        ax1.set_xlabel('Recency')
-        ax1.set_ylabel('Frequency')
-        ax1.set_zlabel('Monetary')
-        ax1.set_title('RFM Clusters (3D)')
+        # Plot 1: 2D scatter plots of RFM (simplified for deployment)
+        fig, axes = plt.subplots(1, 2, figsize=(15, 6))
         
         # Plot 2: Recency vs Frequency colored by segment
-        ax2 = fig.add_subplot(132)
-        sns.scatterplot(data=rfm_segmented, x='Recency', y='Frequency', hue='Segment', ax=ax2)
-        ax2.set_title('Recency vs Frequency by Segment')
+        sns.scatterplot(data=rfm_segmented, x='Recency', y='Frequency', hue='Segment', ax=axes[0])
+        axes[0].set_title('Recency vs Frequency by Segment')
         
         # Plot 3: Recency vs Monetary colored by segment
-        ax3 = fig.add_subplot(133)
-        sns.scatterplot(data=rfm_segmented, x='Recency', y='Monetary', hue='Segment', ax=ax3)
-        ax3.set_title('Recency vs Monetary by Segment')
+        sns.scatterplot(data=rfm_segmented, x='Recency', y='Monetary', hue='Segment', ax=axes[1])
+        axes[1].set_title('Recency vs Monetary by Segment')
         
         st.pyplot(fig)
         
